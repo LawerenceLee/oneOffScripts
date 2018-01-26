@@ -11,7 +11,7 @@ THEIR PLATFORM.
 
 
 SMTP_OBJ = smtplib.SMTP('smtp.gmail.com', 587)
-LIAR_EMAIL = 'ygarduno@berkeley.edu'
+LIAR_EMAIL = ''
 EMAIL_SENDER = ""
 EMAIL_SENDER_PSWD = ""
 SUBJECT = ""
