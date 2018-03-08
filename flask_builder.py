@@ -58,7 +58,8 @@ def check_delete_root(root):
     if os.path.exists(root):
         print("Path already exists!")
         try:
-            delete = strtobool(input("Delete existing files/directories? [y/n] ").lower())
+            delete = strtobool(
+                input("Delete existing files/directories? [y/n] ").lower())
         except ValueError:
             return check_delete_root(root)
         else:
@@ -66,14 +67,15 @@ def check_delete_root(root):
                 try:
                     os.removedirs(root)
                 except OSError:
-                    print("Couldn't remove {}. Please delete it yourself.".format(root))
+                    print(
+                        "Couldn't remove {}. Please delete it yourself.".format(root))
                 else:
                     print("Deleted {}".format(root))
 
 
 def create_dirs(root, slug):
     try:
-        os.makedirs(root)
+        os.makedirs(root, exist_ok=True)
     except OSError:
         print("Couldn't create root at {}.".format(root))
         sys.exit()
@@ -81,7 +83,7 @@ def create_dirs(root, slug):
         for dir in DIRS:
             try:
                 os.mkdir(os.path.join(root, dir.format(project_slug=slug)))
-            except FileExistsError:
+            except os.FileExistsError:
                 pass
 
 
@@ -91,18 +93,22 @@ def create_files(root, slug, name):
             template_file = open(os.path.join('templates', template_name))
             file_content = template_file.read()
             file_content = flask_template_prepair(file_content)
-            file_content = file_content.format(project_name=name, project_slug=slug)
+            file_content = file_content.format(
+                project_name=name, project_slug=slug)
             file_content = flask_template_repair(file_content)
 
-            target_file = open(os.path.join(root, file_name.format(project_slug=slug)), 'w')
+            target_file = open(
+                os.path.join(root, file_name.format(project_slug=slug)), 'w')
             target_file.write(file_content)
         except Exception as e:
             print(e)
         except OSError:
-            print("Couldn't create {}".format(file_name.format(project_slug=slug)))
+            print("Couldn't create {}".format(
+                file_name.format(project_slug=slug)))
         finally:
             template_file.close()
             target_file.close()
+            print("Created: {}".format(template_name))
 
 
 def main():
