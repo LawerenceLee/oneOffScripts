@@ -2,18 +2,13 @@
 '''Automates the process of creating Local Git Repositories'''
 
 import os
-from subprocess import Popen
-import time
 
 
 def git_process():
     try:
-        Popen(["git", 'init'])
-        time.sleep(1)
-        Popen(['git', 'add', '*'])
-        time.sleep(2)
-        Popen(['git', 'commit', '*', '-m', '"inital commit"'])
-        time.sleep(2)
+        os.system("git init")
+        os.system("git add .")
+        os.system("git commit -m 'inital commit'")
     except Exception as e:
         print(e + '\n')
         print('[-] An error occured in the creation of the Git Repository!\n')
